@@ -10,7 +10,7 @@ function Post(props) {
       <CardActionArea component="a" href="#">
         <Card sx={{ display: "flex" }}>
           <CardContent sx={{ flex: 1 }}>
-            <Typography component="h2" variant="h5" sx={{fontSize : "2vw"}}>
+            <Typography component="h2" variant="h5" sx={{fontSize : "2"}}>
               {post.title}
             </Typography>
             <Typography variant="subtitle1" color="text.secondary">

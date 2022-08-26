@@ -1,21 +1,24 @@
 import React from "react";
-import { Paper, Container } from "@mui/material/";
+import { Paper, Container, Button } from "@mui/material/";
 import {Table,TableBody,TableCell,TableContainer,TableHead,TableRow} from "@mui/material/";
-import {useState} from "react";
+import {useState,useEffect} from "react";
+import axios from "axios";
 
 function Join() {
 
-function createData(
-  id: number,
-  title: String,
-  date : Date,
-) {
-  return { id, title, date };
-}
+    const [rows,setRows] = useState([]);
 
-const [rows,setRows] = useState([
+    useEffect(()=> {
+        axios
+         .get("api/Join")
+         .then((response)=>{
+                 const items = response.data.data;
+                 items.map(item => {
+                    setRows([item]);
+                 })
+             });
 
-]);
+        },[]);
 
 return(
 <Container maxWidth="lg">
@@ -31,18 +34,19 @@ return(
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row.id}
+              key={row.boradId}
             >
               <TableCell component="th" scope="row">
-                {row.id}
+                {row.boradId}
               </TableCell>
-              <TableCell align="right">{row.title}</TableCell>
-              <TableCell align="right">{row.date}</TableCell>
+              <TableCell align="right">{row.boradTitle}</TableCell>
+              <TableCell align="right">{row.createDate}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+    <Button>확인</Button>
 
 </Container>
 );
