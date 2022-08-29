@@ -13,6 +13,7 @@ import mainBanner3 from "./assets/testImage3.jpg";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Join from "./pages/Join";
+import Write from "./pages/Write";
 
 const navList = [
   { id: 1, title: "봉사안내", url: "#" },
@@ -77,6 +78,9 @@ function App() {
           </Route>
           <Route path="/Join">
             <Join/>
+           </Route>
+           <Route path="/Write">
+            <Write/>
            </Route>
         </main>
       </Container>
