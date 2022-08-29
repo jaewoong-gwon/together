@@ -6,7 +6,8 @@ import axios from "axios";
 
 function Join() {
 
-    const [rows,setRows] = useState([]);
+    const [total,setTotal] = useState([]);//전체 DB 결과를 저장.
+    const [rows,setRows] = useState([]); //totalData를 복사하여, 첫번째 테이블 화면에 표시할 데이터만 저장.
     const [checkedBox, setCheckedBox] = useState([]); //check 된 checkBox 를 관리. id값 즉 db에 바로 사용 가능한 key 값을 저장.
     const [checked,setChecked] = useState(false);
     const [page,setPage] = useState(0);
@@ -20,7 +21,7 @@ function Join() {
         else {
             const temp = [...checkedBox];
             const result = temp.filter(temp => temp.id != key);
-            //해당 조건리 t`rue면 요소를 유지, false면 버림) 새로운 배열로 반환
+            //해당 조건이 true면 요소를 유지, false면 버림) 새로운 배열로 반환
             setCheckedBox(result);
             console.log(checkedBox);
             }
@@ -29,11 +30,15 @@ function Join() {
     const handleParentChecked = (event) => {
         console.log(event.target.className);
         setChecked(event.target.checked);
-        if(checked){console.log(checkedBox);}
+        if(checked){
+            console.log(checkedBox);
+        }
     }
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
+    const handleChangePage = (event) => {
+        if(page+1 )
+        setPage(page+1);
+        setRows(total.slice(rows.length,rows.length+10));
       };
 
     const handleChangeRowsPerPage = (event) => {
@@ -46,9 +51,9 @@ function Join() {
          .get("api/Join")
          .then((response)=>{
                  const items = response.data.data;
-                 setRows(items);
+                 setTotal(items);
+                 setRows(items.slice(undefined,10));
              });
-
         },[]);
 
 return(
@@ -83,10 +88,11 @@ return(
       </Table>
           <TablePagination
             component="div"
-            count={rows.length}
+            count={total.length}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
-            page={page} rowsPerPage={10}
+            page={page}
+            rowsPerPage={10}
             rowsPerPageOptions={[10]}/>
     </TableContainer>
 
