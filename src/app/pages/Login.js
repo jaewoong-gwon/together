@@ -7,6 +7,8 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import kakaoLogin from "../assets/kakao_login_medium_wide.png";
 import googleLogin from "../assets/btn_google_signin_light_normal_web.png";
+import naverLogin from "../assets/btnG_완성형.png";
+
 import axios from "axios";
 
 function Login() {
@@ -129,8 +131,11 @@ function Login() {
                   href="https://kauth.kakao.com/oauth/authorize?client_id=7aa17da574d10f129f263936b389747e&redirect_uri=http://localhost:8080/oauth2/kakao&response_type=code">
             <img src={kakaoLogin} />
           </Button>
-          <Button sx={{ mt: 3 }} href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&scope=profile&access_type=offline&state=state_parameter_passthrough_value&redirect_uri=http://localhost:8080/login/oauth2/code/google&client_id=812440292846-dojq800gmset5ro180rm4gaj13ml0rpf.apps.googleusercontent.com">
+          <Button sx={{ mt: 3 }} href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&scope=profile%20email&access_type=offline&state=state_parameter_passthrough_value&redirect_uri=http://localhost:8080/login/oauth2/code/google&client_id=812440292846-dojq800gmset5ro180rm4gaj13ml0rpf.apps.googleusercontent.com">
             <img src={googleLogin} />
+          </Button>
+          <Button sx={{ mt: 3, width:'90%'}} href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=PChZYiVT1UdbEnkmBs1g&state=STATE_STRING&redirect_uri=http://localhost:8080/oauth2/naver">
+            <img src={naverLogin} style={{ width : '50%'}} />
           </Button>
         </Box>
       </Box>
