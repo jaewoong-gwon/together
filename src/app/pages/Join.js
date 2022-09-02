@@ -5,38 +5,54 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import {useState,useEffect} from "react";
 import axios from "axios";
+import {withRouter} from "react-router-dom";
 
 let count = 1; //해당함수는 리로드 될시 전체를 리로드 하기 떄문에 변수 선언을 join 밖에서 해줘야지, 리로드 되도 값이 초기화 되지 않는다.
 //함수 전체 export 가 아닌 기능적인 부분을 뺀, 나머지를 export 하는 방식으로 바꿔야할듯.
 
-function Join() {
+function Join({history}) {
 
     const [total,setTotal] = useState([]);//전체 DB 결과를 저장.
     const [rows,setRows] = useState([]); //totalData를 복사하여, 첫번째 테이블 화면에 표시할 데이터만 저장.
-    const [checkedBox, setCheckedBox] = useState([]); //check 된 checkBox 를 관리. id값 즉 db에 바로 사용 가능한 key 값을 저장.
+    const [checkedBox, setCheckedBox] = useState([]); //check 된 checkBox 를 관리. id값 즉 db에 바로 사용 가능한 key 값을
+    // 저장.
     const [checked,setChecked] = useState(false);
    // const [disable,setDisable] = useState(true);
 
     const handleChildChange = (event) => {
-        console.log(event.target);
         const key = event.target.id; // String
-        if(event.target.checked){ setCheckedBox([...checkedBox, {id : key}]); }
-
-        else {
+        if(event.target.checked) { //체크박스에 체크 된 경우.
+            setCheckedBox([...checkedBox, {id: key}]);
+        }
+        if (!event.target.checked){ // 체크 안된 경우.
             const temp = [...checkedBox];
-            const result = temp.filter(temp => temp.id != key);
+            const result = temp.filter(temp => temp.id !== Number(key));
             //해당 조건이 true면 요소를 유지, false면 버림) 새로운 배열로 반환
             setCheckedBox(result);
-            console.log(checkedBox);
             }
         }
 
     const handleParentChecked = (event) => {
-        console.log(event.target.className);
         setChecked(event.target.checked);
         if(checked){
             console.log(checkedBox);
         }
+    }
+
+    const handleDelete = () => {
+        const answer = window.confirm("진짜 삭제함??");
+            if(answer === true){
+                axios.get("api/Join/delete",{
+                    param : {
+                        boardIds : checkedBox
+                    }
+                }).then((response)=>{
+                    history.goBack();
+                }).catch((error) => {
+                    console.log(error.response);
+                })
+
+            }
     }
 
     const handleChangePage = (event) => {
@@ -61,7 +77,7 @@ function Join() {
         axios
          .get("api/Join")
          .then((response)=>{
-                 const items = response.data.data;
+                 const items = response.data;
                  setTotal(items); //total에 바로 적용되지 않음 -> React는 비동기 방식이기 때문.
                  setRows(items.slice(undefined,10));
                  //slice -> begin(Index) 부터 end(Index) 까지(end 미포함)
@@ -111,9 +127,9 @@ return(
       </Table>
     </TableContainer>
         <Button href="/Write">글쓰기</Button>
-        <Button>삭제</Button>
+        <Button onClick={handleDelete}>삭제</Button>
 </Container>
 );
 }
 
-export default Join;
+export default  withRouter(Join);

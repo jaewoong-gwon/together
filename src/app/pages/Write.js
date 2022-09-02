@@ -2,9 +2,11 @@ import React from "react";
 import { Paper, Container, Button,Box } from "@mui/material/";
 import { FormControl,InputLabel,OutlinedInput} from "@mui/material";
 import {useState,useEffect} from "react";
+import {withRouter} from "react-router-dom";
 import axios from "axios";
 
-function Write() {
+
+function Write({history}) {
 
  const [values, setValues] = useState({
     boardTitle: "",
@@ -15,18 +17,22 @@ function Write() {
       setValues({ ...values, [prop]: event.target.value });
     };
 
+
   const handleSubmit = () => {
+      console.log(values);
   const board = {
       boardTitle : values.boardTitle,
       boardContent : values.boardContent
     }
-    console.log(values);
     axios.get('api/Join/insert',{
           params: {
-              Board : board
+              board : board
           }
       }).then((response)=>{
-          console.log(response.data)
+          console.log(response);
+          alert('글이 등록되었습니다!')
+          history.goBack();
+
       }).catch((error) => {
           console.log(error.response);
       })
@@ -55,4 +61,4 @@ return(
 );
 }
 
-export default Write;
+export default withRouter(Write); //리엑트 라우터 부가기능 중 하나로, history 를 쓰기 위함.
