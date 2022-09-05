@@ -10,6 +10,7 @@ import {withRouter} from "react-router-dom";
 let count = 1; //해당함수는 리로드 될시 전체를 리로드 하기 떄문에 변수 선언을 join 밖에서 해줘야지, 리로드 되도 값이 초기화 되지 않는다.
 //함수 전체 export 가 아닌 기능적인 부분을 뺀, 나머지를 export 하는 방식으로 바꿔야할듯.
 
+
 function Join({history}) {
 
     const [total,setTotal] = useState([]);//전체 DB 결과를 저장.
@@ -35,13 +36,13 @@ function Join({history}) {
     }
 
     const handleDelete = () => {
-        console.log(checkedBox);
         const answer = window.confirm("진짜 삭제함??");
             if(answer === true){
                 axios.post("api/Join/delete",{
                         board : checkedBox
                 }).then((response)=>{
-                    //history.goBack();
+                    alert("삭제 완료!");
+                    window.location.reload();
                 }).catch((error) => {
                     console.log(error.response);
                 })
