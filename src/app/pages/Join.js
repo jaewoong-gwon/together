@@ -17,12 +17,11 @@ function Join({history}) {
     const [checkedBox, setCheckedBox] = useState([]); //check 된 checkBox 를 관리. id값 즉 db에 바로 사용 가능한 key 값을
     // 저장.
     const [checked,setChecked] = useState(false);
-   // const [disable,setDisable] = useState(true);
 
     const handleChildChange = (event) => {
         const key = event.target.id; // String
         if(event.target.checked) { //체크박스에 체크 된 경우.
-            setCheckedBox([...checkedBox, {id: key}]);
+            setCheckedBox([...checkedBox, Number(key)]);
         }
         if (!event.target.checked){ // 체크 안된 경우.
             const temp = [...checkedBox];
@@ -33,21 +32,16 @@ function Join({history}) {
         }
 
     const handleParentChecked = (event) => {
-        setChecked(event.target.checked);
-        if(checked){
-            console.log(checkedBox);
-        }
     }
 
     const handleDelete = () => {
+        console.log(checkedBox);
         const answer = window.confirm("진짜 삭제함??");
             if(answer === true){
-                axios.get("api/Join/delete",{
-                    param : {
-                        boardIds : checkedBox
-                    }
+                axios.post("api/Join/delete",{
+                        board : checkedBox
                 }).then((response)=>{
-                    history.goBack();
+                    //history.goBack();
                 }).catch((error) => {
                     console.log(error.response);
                 })

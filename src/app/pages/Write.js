@@ -19,11 +19,11 @@ function Write({history}) {
 
 
   const handleSubmit = () => {
-      console.log(values);
   const board = {
       boardTitle : values.boardTitle,
       boardContent : values.boardContent
     }
+    console.log(board);
     axios.get('api/Join/insert',{
           params: {
               board : board
@@ -35,6 +35,7 @@ function Write({history}) {
 
       }).catch((error) => {
           console.log(error.response);
+
       })
   }
 
