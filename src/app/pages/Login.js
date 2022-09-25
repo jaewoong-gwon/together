@@ -42,11 +42,27 @@ function Login() {
           loginInfo : loginInfo
       }
   }).then((response)=>{
-      console.log(response.data)
+      console.log(response.data);
+
   }).catch((error) => {
       console.log(error.response);
   })
   };
+
+  const handleSnsLogin = (event) => {
+        const snsName = event.currentTarget.id;
+            axios.get(`api/login/${snsName}`)
+                .then((response) =>{
+                    console.log(response);
+                    //controller로 선언하여, 단일 파라미터를 받아 파라미터에 따라 하나의 서비스에서 다른 요청을 보냄.
+                    //요청 처리가 끝나면 View 리턴? -> redirect 해주는 방식.
+                    //응답이 성공으로 오면 세션?쿠키?정보 저장 후 home 으로 이동 redirect?
+                }).catch((error)=>{
+                    //응답 실패는 오류 처리로 해결. 응답 실패 -> sns 연동 실패만 처리
+                    //내부 db 연동 등 backend 에서 처리할 껀 frontend 로 넘기지 않는다.
+                })
+  };
+
 
   const lists = [
     { id: 1, title: "아이디 찾기", url: "#" },
@@ -134,7 +150,7 @@ function Login() {
           <Button sx={{ mt: 3 }} href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&scope=profile%20email&access_type=offline&state=state_parameter_passthrough_value&redirect_uri=http://localhost:8080/login/oauth2/code/google&client_id=812440292846-dojq800gmset5ro180rm4gaj13ml0rpf.apps.googleusercontent.com">
             <img src={googleLogin} />
           </Button>
-          <Button sx={{ mt: 3, width:'90%'}} href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=PChZYiVT1UdbEnkmBs1g&state=STATE_STRING&redirect_uri=http://localhost:8080/oauth2/naver">
+          <Button sx={{ mt: 3, width:'90%'}} id="naver" onClick={handleSnsLogin}>
             <img src={naverLogin} style={{ width : '50%'}} />
           </Button>
         </Box>

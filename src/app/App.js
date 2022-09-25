@@ -14,7 +14,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Join from "./pages/Join";
 import Write from "./pages/Write";
-
+import Management from "./pages/Management"
 const navList = [
   { id: 1, title: "봉사안내", url: "#" },
   { id: 2, title: "봉사참여", url: "/Join" },
@@ -81,6 +81,9 @@ function App() {
            </Route>
            <Route path="/Write">
             <Write/>
+           </Route>
+           <Route path="/Management">
+            <Management/>
            </Route>
         </main>
       </Container>

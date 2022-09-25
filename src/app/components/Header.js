@@ -3,8 +3,18 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
+import {withRouter} from "react-router-dom";
 
-function Header() {
+function Header({history}) {
+const test = () => {
+    axios.get("/api/Management")
+        .then((response) => {
+            console.log(response.data);
+            const url = response.data;
+            history.push({id:1},'Management',url);
+        })
+}
   return (
     <React.Fragment>
       <Toolbar
@@ -36,10 +46,13 @@ function Header() {
           <Button size="small" color="inherit" href="/Fqa">
             <Typography>FQA</Typography>
           </Button>
+          <Button size="small" color="inherit" onClick={test}>
+            Test
+          </Button>
         </Box>
       </Toolbar>
     </React.Fragment>
   );
 }
 
-export default Header;
+export default withRouter(Header);

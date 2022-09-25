@@ -36,6 +36,7 @@ function Join({history}) {
     }
 
     const handleDelete = () => {
+        console.log(checkedBox);
         const answer = window.confirm("진짜 삭제함??");
             if(answer === true){
                 axios.post("api/Join/delete",{
@@ -73,6 +74,7 @@ function Join({history}) {
          .get("api/Join")
          .then((response)=>{
                  const items = response.data;
+                 console.log(items);
                  setTotal(items); //total에 바로 적용되지 않음 -> React는 비동기 방식이기 때문.
                  setRows(items.slice(undefined,10));
                  //slice -> begin(Index) 부터 end(Index) 까지(end 미포함)

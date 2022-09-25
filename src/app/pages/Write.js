@@ -23,7 +23,6 @@ function Write({history}) {
       boardTitle : values.boardTitle,
       boardContent : values.boardContent
     }
-    console.log(board);
     axios.get('api/Join/insert',{
           params: {
               board : board
