@@ -8,13 +8,14 @@ import {withRouter} from "react-router-dom";
 
 function Header({history}) {
 const test = () => {
-    axios.get("/api/Management")
+    axios.get('api/Management')
         .then((response) => {
             console.log(response.data);
             const url = response.data;
-            history.push({id:1},'Management',url);
-        })
-}
+            history.push({id:1},'Management',url);})
+        .catch((error) => {
+            console.log(error)})
+    }
   return (
     <React.Fragment>
       <Toolbar
